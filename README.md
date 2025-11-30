@@ -48,7 +48,7 @@ See **UAM_Documentation**:
 
 # Demo/Results
 
-See results and demonstration videos in the **videos_and_photos** folder, or refer to **Section 4: Results and Demonstrations** of the **UAM_Documentation** PDF.
+See results and demonstration videos in the **results** folder, or refer to **Section 4: Results and Demonstrations** of the **UAM_Documentation** PDF.
 
 ---
 
@@ -60,7 +60,7 @@ See **Section 6: References** of the **UAM_Documentation** PDF.
 
 ## Code Function Structure Diagram
 
-See **Section 5: Code File Dependency Diagram** of the **UAM_Documentation** PDF, or the corresponding images in the **videos_and_photos** folder.
+See **Section 5: Code File Dependency Diagram** of the **UAM_Documentation** PDF, or the corresponding images in the **results** folder.
 
 ---
 
