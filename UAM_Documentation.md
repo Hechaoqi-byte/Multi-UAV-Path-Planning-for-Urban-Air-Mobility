@@ -221,6 +221,8 @@ This section corresponds to the simulation workflow shown in the overall framewo
 
   [🎥 Video 1: All UAVs executing 15 tasks with 16 UAVs in total](results/Video/Video_1_All_UAVs_Executing_15_Tasks_with_16_UAVs_in_Total.mp4)
 
+  [![Video 1: All UAVs executing 15 tasks with 16 UAVs in total](results/Video/Video_1.png)](results/Video/Video_1_All_UAVs_Executing_15_Tasks_with_16_UAVs_in_Total.mp4)
+
   <video src="./results/Video/Video_1_All_UAVs_Executing_15_Tasks_with_16_UAVs_in_Total.mp4"></video>
 
 - Animation 2: Single UAV (UAV 5) performing its assigned task in the case of 15 task points and 16 UAVs.
