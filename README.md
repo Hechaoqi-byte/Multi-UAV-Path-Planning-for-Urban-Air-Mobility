@@ -1,10 +1,12 @@
-
-
 # Solution to MATLAB and Simulink Challenge project 247 Multi-UAV Path Planning for Urban Air Mobility
 
 ---
 
 Due to the rapid development of the low-altitude economy, future parcel delivery will become increasingly unmanned and is likely to be handled by drones. In China, couriers currently deliver packages from distribution centers to parcel lockers located in each building of residential communities. We envision that, in the future, drones could take over these tasks. Therefore, we designed this project to allow multiple drones to depart from aerial charging stations (which also serve as pickup points) in a section of Manhattan, deliver packages to various task points in order of priority based on energy efficiency and time optimality, and finally return to the charging station closest to their last task point.
+
+> **Note:**  
+> Absolutely all content, instructions, and details are included in **UAM_Document**.  
+> For completeness, both Markdown and PDF versions of UAM_Document are provided.
 
 # Project details
 
@@ -52,7 +54,7 @@ See **UAM_Document**:
 
 # Demo/Results
 
-See results and demonstration videos in the **results** folder, or refer to **Section 4: Results and Demonstrations** of the **UAM_Document** PDF.
+See results and demonstration videos in the **results** folder, or refer to **Section 4: Results and Demonstrations** of the **UAM_Document**.
 
 > **Note:** All videos in the **results** folder must be downloaded locally to view.
 
@@ -60,15 +62,10 @@ See results and demonstration videos in the **results** folder, or refer to **Se
 
 # Reference
 
-See **Section 6: References** of the **UAM_Document** PDF.
+See **Section 6: References** of the **UAM_Document**.
 
 ---
 
 ## Code Function Structure Diagram
 
-See **Section 5: Code File Dependency Diagram** of the **UAM_Document** PDF, or the corresponding images in the **results** folder.
-
----
-
-**Note:**  
-Absolutely all content, instructions, and details are included in **UAM_Document**.
+See **Section 5: Code File Dependency Diagram** of the **UAM_Document**, or the corresponding images in the **results** folder.
