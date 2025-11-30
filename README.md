@@ -1,24 +1,20 @@
-# Solution to MATLAB and Simulink Challenge project <'project number'> <'Project Title'>
-This is a template repo for MATLAB and Simulink Challenge Project solutions.
-
-Please add the following items:
-
-[Program link](https://github.com/mathworks/MATLAB-Simulink-Challenge-Project-Hub)
-
-[Project description link]<Add link to the project description from the list of projects above>
+# Solution to MATLAB and Simulink Challenge project 247 Multi-UAV Path Planning for Urban Air Mobility
 
 ---
 
 # Project details
 
 See **UAM_Documentation**:
-- **Section 1:** Project Introduction and Background  
-- **Section 2:** Implementation Details  
-- **Section 3:** Algorithm Design and System Architecture  
+- **Section 1:** Overview of Implemented Functions
+- **Section 2:** Technical Completeness and Innovation
+- **Section 3:** Detailed Implementation Process
 
 ---
 
 # How to run section
+
+> **Important:**  
+> Please run the following scripts **in sequence**, as the outputs of each step are required by the next.
 
 1. **First**, add the `src` directory to the MATLAB path.
 2. **Run** `manhattan_3d_planning.m` (main function):
@@ -47,25 +43,24 @@ See **UAM_Documentation**:
    - **Automated Driving Toolbox**
    - **Mapping Toolbox**
    - **Simulink / Simulink 3D Animation**
-  
 
 ---
 
 # Demo/Results
 
-See results and demonstration videos in the **videos_and_photos** folder, or refer to **Section 4** of the **UAM_Documentation** PDF.
+See results and demonstration videos in the **results** folder, or refer to **Section 4: Results and Demonstrations** of the **UAM_Documentation** PDF.
 
 ---
 
 # Reference
 
-See **Section 6** of the **UAM_Documentation** PDF.
+See **Section 6: References** of the **UAM_Documentation** PDF.
 
 ---
 
 ## Code Function Structure Diagram
 
-See **Section 5** of the **UAM_Documentation** PDF, or the corresponding images in the **videos_and_photos** folder.
+See **Section 5: Code File Dependency Diagram** of the **UAM_Documentation** PDF, or the corresponding images in the **results** folder.
 
 ---
 
