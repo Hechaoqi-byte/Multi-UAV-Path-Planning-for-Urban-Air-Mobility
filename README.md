@@ -50,6 +50,8 @@ See **UAM_Documentation**:
 
 See results and demonstration videos in the **results** folder, or refer to **Section 4: Results and Demonstrations** of the **UAM_Documentation** PDF.
 
+> **Note:** All videos in the **results** folder must be downloaded locally to view.
+
 ---
 
 # Reference
