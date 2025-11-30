@@ -1,4 +1,3 @@
-
 # Solution to MATLAB and Simulink Challenge project 247 Multi-UAV Path Planning for Urban Air Mobility
 
 ---
@@ -13,6 +12,8 @@ See **UAM_Documentation**:
 ---
 
 # How to run section
+
+> **Note:** Please run the following scripts in sequence, as each step depends on the previous one.
 
 1. **First**, add the `src` directory to the MATLAB path.
 2. **Run** `manhattan_3d_planning.m` (main function):
