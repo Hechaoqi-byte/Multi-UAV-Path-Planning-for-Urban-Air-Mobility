@@ -223,23 +223,25 @@ This section corresponds to the simulation workflow shown in the overall framewo
 
   [![Video 1: All UAVs executing 15 tasks with 16 UAVs in total](results/Video/Video_1.png)](results/Video/Video_1_All_UAVs_Executing_15_Tasks_with_16_UAVs_in_Total.mp4)
 
-  <video src="./results/Video/Video_1_All_UAVs_Executing_15_Tasks_with_16_UAVs_in_Total.mp4"></video>
-
 - Animation 2: Single UAV (UAV 5) performing its assigned task in the case of 15 task points and 16 UAVs.
 
-  
+  [🎥 Video 2: Single UAV (UAV 5) performing its assigned task](results/Video/Video_2_Single_UAV_5_Performing_Its_Assigned_Task_in_the_Case_of_15_Task_Points_and_16_UAVs.mp4)
 
-  <video src="./results/Video/Video_2_Single_UAV_5_Performing_Its_Assigned_Task_in_the_Case_of_15_Task_Points_and_16_UAVs.mp4"></video>
+  [![Video 2: Single UAV (UAV 5) performing its assigned task in the case of 15 task points and 16 UAVs](results/Video/Video_2.png)](results/Video/Video_2_Single_UAV_5_Performing_Its_Assigned_Task_in_the_Case_of_15_Task_Points_and_16_UAVs.mp4)
 
 - Animation 3: Single UAV (UAV 9) performing its assigned task in the case of 15 task points and 16 UAVs.
 
-  <video src="./results/Video/Video_3_Single_UAV_9_Performing_Its_Assigned_Task_in_the_Case_of_15_Task_Points_and_16_UAVs.mp4
-  "></video>
+  [🎥 Video 3: Single UAV (UAV 9) performing its assigned task](results/Video/Video_3_Single_UAV_9_Performing_Its_Assigned_Task_in_the_Case_of_15_Task_Points_and_16_UAVs.mp4)
+
+  [![Video 3: Single UAV (UAV 9) performing its assigned task in the case of 15 task points and 16 UAVs](results/Video/Video_3.png)](results/Video/Video_3_Single_UAV_9_Performing_Its_Assigned_Task_in_the_Case_of_15_Task_Points_and_16_UAVs.mp4)
 
 - Animation 4: Single UAV (UAV 11) performing its assigned task in the case of 15 task points and 16 UAVs.
 
-  <video src="./results/Video/Video_4_Single_UAV_11_Performing_Its_Assigned_Task_in_the_Case_of_15_Task_Points_and_16_UAVs.mp4
-  "></video>
+  [🎥 Video 4: Single UAV (UAV 11) performing its assigned task](results/Video/Video_4_Single_UAV_11_Performing_Its_Assigned_Task_in_the_Case_of_15_Task_Points_and_16_UAVs.mp4)
+  
+  [![Video 4: Single UAV (UAV 11) performing its assigned task in the case of 15 task points and 16 UAVs](results/Video/Video_4.png)](results/Video/Video_4_Single_UAV_11_Performing_Its_Assigned_Task_in_the_Case_of_15_Task_Points_and_16_UAVs.mp4)
+  
+  
 
 #### 4.1.2 Case 2: 9 Task Points, 9 Charging Stations, 9 UAVs, Simulation Time = 100 s
 
