@@ -4,7 +4,7 @@
 
 # Project details
 
-See **UAM_Documentation**:
+See **UAM_Document**:
 - **Section 1:** Overview of Implemented Functions
 - **Section 2:** Technical Completeness and Innovation
 - **Section 3:** Detailed Implementation Process
@@ -48,21 +48,23 @@ See **UAM_Documentation**:
 
 # Demo/Results
 
-See results and demonstration videos in the **results** folder, or refer to **Section 4: Results and Demonstrations** of the **UAM_Documentation** PDF.
+See results and demonstration videos in the **results** folder, or refer to **Section 4: Results and Demonstrations** of the **UAM_Document** PDF.
+
+> **Note:** All videos in the **results** folder must be downloaded locally to view.
 
 ---
 
 # Reference
 
-See **Section 6: References** of the **UAM_Documentation** PDF.
+See **Section 6: References** of the **UAM_Document** PDF.
 
 ---
 
 ## Code Function Structure Diagram
 
-See **Section 5: Code File Dependency Diagram** of the **UAM_Documentation** PDF, or the corresponding images in the **results** folder.
+See **Section 5: Code File Dependency Diagram** of the **UAM_Document** PDF, or the corresponding images in the **results** folder.
 
 ---
 
 **Note:**  
-Absolutely all content, instructions, and documentation are included in **UAM_Documentation**.
+Absolutely all content, instructions, and details are included in **UAM_Document**.
