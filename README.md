@@ -1,6 +1,10 @@
+
+
 # Solution to MATLAB and Simulink Challenge project 247 Multi-UAV Path Planning for Urban Air Mobility
 
 ---
+
+Due to the rapid development of the low-altitude economy, future parcel delivery will become increasingly unmanned and is likely to be handled by drones. In China, couriers currently deliver packages from distribution centers to parcel lockers located in each building of residential communities. We envision that, in the future, drones could take over these tasks. Therefore, we designed this project to allow multiple drones to depart from aerial charging stations (which also serve as pickup points) in a section of Manhattan, deliver packages to various task points in order of priority based on energy efficiency and time optimality, and finally return to the charging station closest to their last task point.
 
 # Project details
 
