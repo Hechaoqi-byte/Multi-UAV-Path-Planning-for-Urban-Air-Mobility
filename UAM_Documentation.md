@@ -30,9 +30,9 @@ On the constructed Manhattan 3D occupancy grid map, five global path planning al
 
 **Table 1: Performance Comparative Analysis of Five Path Planning Algorithms**
 
-![Tab 1  Performance Comparative Analysis of Five Path Planning Algorithms](./results/Image/Tab 1  Performance Comparative Analysis of Five Path Planning Algorithms.png)
+![Tab 1  Performance Comparative Analysis of Five Path Planning Algorithms](results/Image/Tab 1  Performance Comparative Analysis of Five Path Planning Algorithms.png)
 
-![Fig 1. Path planning results of the five algorithms for the same start and end points.](./results/Image/Fig 1. Path planning results of the five algorithms for the same start and end points..png)
+![Fig 1. Path planning results of the five algorithms for the same start and end points.](results/Image/Fig 1. Path planning results of the five algorithms for the same start and end points..png)
 
 *Fig 1. Path planning results of the five algorithms for the same start and end points.*
 
