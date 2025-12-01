@@ -115,18 +115,18 @@ validators = cell(CONFIG.numUAVs, 1);
 planners = cell(CONFIG.numUAVs, 1);
 
 for u = 1:CONFIG.numUAVs
-    % 参考路径
+    % Create reference path
     waypoints = [uav_start(u,:); uav_target(u,:)];
     refPaths{u} = helperCreateReferencePath([waypoints, zeros(2,1)]);
     
-    % 碰撞验证器
+    % Create collision validator
     vehDims = struct('Length', 5, 'Width', 5, 'Height', 3);
     validators{u} = helperCreateCollisionValidator([], vehDims);
     validators{u}.safetyMargin = CONFIG.safety_margin;
     validators{u}.predictionHorizon = CONFIG.timeHorizon;
     validators{u}.predictedObstacles = {};
     
-    % MPC planner
+    % Initialize MPC planner
     planners{u} = struct();
     planners{u}.refPath = refPaths{u};
     planners{u}.timeHorizon = CONFIG.timeHorizon;
@@ -146,13 +146,13 @@ fprintf('====================================================\n');
 
 setup(scene);
 
-% 状态历史
+% Initialize state history
 stateHistory = cell(CONFIG.numUAVs, 1);
 for u = 1:CONFIG.numUAVs
     stateHistory{u} = zeros(CONFIG.num_steps, 6);
 end
 
-% 当前状态
+% Initialize current states
 currentPos = uav_start;
 currentVel = zeros(CONFIG.numUAVs, 3);
 for u = 1:CONFIG.numUAVs
@@ -161,12 +161,12 @@ for u = 1:CONFIG.numUAVs
     currentVel(u,:) = dir * CONFIG.speed_limit * 0.6;
 end
 
-% MPC轨迹管理
+% Initialize MPC trajectory management
 currentTrajs = cell(CONFIG.numUAVs, 1);
 trajSteps = zeros(CONFIG.numUAVs, 1);
 stepsSinceReplan = zeros(CONFIG.numUAVs, 1);
 
-% 统计
+% Initialize statistics
 minDistRecord = inf;
 avoidCounts = zeros(CONFIG.numUAVs, 1);
 sensorDetections = zeros(CONFIG.numUAVs, 1);
