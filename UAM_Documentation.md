@@ -5,14 +5,14 @@
 | Competition Requirement | Completed Work |
 |------------------------|----------------|
 | **Basic Work** | |
-| Urban 3D Scene Setup | **[Scene Construction]:** Integrated OpenStreetMap building data and GMTED2010 terrain elevation data to generate a high-fidelity urban geographic model. Constructed a 3D occupancy grid map (occupancyMap3D) of Manhattan, USA, supporting simulation in complex urban environments. |
-| Single-UAV 3D Path Planning | **[Algorithm Implementation]:** Applied the BiRRT (Bidirectional Rapidly-exploring Random Tree) algorithm for global path planning in the 3D occupancy grid map (occupancyMap3D). Compared multiple algorithms, including RRT, RRT*, PRM, A*, and BiRRT, and finally adopted BiRRT for its balance between path length and computational efficiency. Performed polynomial trajectory smoothing based on the Minimum Snap method. |
-| Multi-UAV 3D Path Planning | **[Algorithm Implementation]:** Supported flexible configuration of the number of egoUAVs, enabling multi-UAV parallel path planning and collision-free navigation. |
+| Urban 3D Scene Setup | **[Scene Construction]:** <br />• Integrated OpenStreetMap building data and GMTED2010 terrain elevation data to generate a high-fidelity urban geographic model. <br />• Constructed a 3D occupancy grid map (occupancyMap3D) of Manhattan, USA, supporting simulation in complex urban environments. |
+| Single-UAV 3D Path Planning | **[Algorithm Implementation]:** <br />• Applied the BiRRT (Bidirectional Rapidly-exploring Random Tree) algorithm for global path planning in the 3D occupancy grid map (occupancyMap3D). <br />• Compared multiple algorithms, including RRT, RRT*, PRM, A*, and BiRRT, and finally adopted BiRRT for its balance between path length and computational efficiency. <br />• Performed polynomial trajectory smoothing based on the Minimum Snap method. |
+| Multi-UAV 3D Path Planning | **[Algorithm Implementation]:** <br />• Supported flexible configuration of the number of egoUAVs, enabling multi-UAV parallel path planning and collision-free navigation. |
 | **Advanced Work** | |
-| Dynamic Obstacle State Estimation Based on Simulated Radar | **[Algorithm Implementation]:** Integrated radar and LiDAR sensor models to perform environmental perception and obstacle detection. Employed JPDA (Joint Probabilistic Data Association) and PHD (Probability Hypothesis Density) filters for multi-target tracking, allowing real-time estimation of obstacle positions and velocities. |
-| Multi-UAV Logistics Task Allocation | **[Algorithm Implementation]:** Solved the Multi-Traveling Salesman Problem (MTSP) using an improved Genetic Algorithm (GA) to achieve intelligent multi-task–multi-UAV assignment. Incorporated multiple realistic constraints—obstacle perception, battery management, and time scheduling—to dynamically balance task completion time and UAV utilization efficiency. Introduced a preventive return-to-base mechanism and range constraint strategy to enhance mission reliability. |
-| Dynamic and Static Obstacle Avoidance via Decentralized Algorithms | **[Algorithm Implementation]:** Developed a prediction model based on multi-sensor fusion to generate future obstacle trajectories in real time. Employed multi-level trajectory screening (kinematic constraints + collision checking + cost optimization) to identify feasible avoidance paths. Adopted an MPC-like framework (short-horizon execution + frequent replanning) to achieve real-time obstacle response and continuous path correction in dynamic environments. |
-| Full-City Multi-UAV Logistics Simulation | **[Integrated Testing]:** Integrated the urban 3D environment with the multi-UAV system to build a collaborative simulation platform for Manhattan's urban district. Supported simultaneous multi-UAV mission execution, real-time obstacle avoidance, and dynamic visualization. |
+| Dynamic Obstacle State Estimation Based on Simulated Radar | **[Algorithm Implementation]:** <br />• Integrated radar and LiDAR sensor models to perform environmental perception and obstacle detection.<br />• Employed JPDA (Joint Probabilistic Data Association) and PHD (Probability Hypothesis Density) filters for multi-target tracking, allowing real-time estimation of obstacle positions and velocities. |
+| Multi-UAV Logistics Task Allocation | **[Algorithm Implementation]:** <br />• Solved the Multi-Traveling Salesman Problem (MTSP) using an improved Genetic Algorithm (GA) to achieve intelligent multi-task–multi-UAV assignment. <br />• Incorporated multiple realistic constraints—obstacle perception, battery management, and time scheduling—to dynamically balance task completion time and UAV utilization efficiency. <br />• Introduced a preventive return-to-base mechanism and range constraint strategy to enhance mission reliability. |
+| Dynamic and Static Obstacle Avoidance via Decentralized Algorithms | **[Algorithm Implementation]:** <br />• Developed a prediction model based on multi-sensor fusion to generate future obstacle trajectories in real time. <br />• Employed multi-level trajectory screening (kinematic constraints + collision checking + cost optimization) to identify feasible avoidance paths. <br />• Adopted an MPC-like framework (short-horizon execution + frequent replanning) to achieve real-time obstacle response and continuous path correction in dynamic environments. |
+| Full-City Multi-UAV Logistics Simulation | **[Integrated Testing]:** <br />• Integrated the urban 3D environment with the multi-UAV system to build a collaborative simulation platform for Manhattan's urban district. <br />• Supported simultaneous multi-UAV mission execution, real-time obstacle avoidance, and dynamic visualization. |
 
 ---
 
@@ -32,7 +32,7 @@ On the constructed Manhattan 3D occupancy grid map, five global path planning al
 
 ![Tab 1  Performance Comparative Analysis of Five Path Planning Algorithms](results/Image/Tab_1_Performance_Comparative_Analysis_of_Five_Path_Planning_Algorithms.png)
 
-![Fig 1. Path planning results of the five algorithms for the same start and end points.](results/Image/Fig 1. Path planning results of the five algorithms for the same start and end points..png)
+![Fig 1. Path planning results of the five algorithms for the same start and end points.](results/Image/Fig_1_Path_Planning_Results_of_the_Five_Algorithms_for_the_Same_Start_and_End_Points.png)
 
 *Fig 1. Path planning results of the five algorithms for the same start and end points.*
 
@@ -48,11 +48,11 @@ On the constructed Manhattan 3D occupancy grid map, five global path planning al
 
 - **Energy Prediction and Preventive Return Mechanism:** Before executing each task, the system predicts remaining battery capacity. If the predicted value falls below a 20% safety threshold, the UAV automatically returns to a charging station. This mechanism prevents mission interruptions and enhances system safety and reliability.
 
-![Fig 2. MTSP Task Planning Results for a Scenario with 16 UAVs and 15 Tasks](./results/Image/Fig 2. MTSP Task Planning Results for a Scenario with 16 UAVs and 15 Tasks.png)
+![Fig 2. MTSP Task Planning Results for a Scenario with 16 UAVs and 15 Tasks](./results/Image/Fig_2_MTSP_Task_Planning_Results_for_a_Scenario_with_16_UAVs_and_15_Tasks.png)
 
 *Fig 2. MTSP Task Planning Results for a Scenario with 16 UAVs and 15 Tasks*
 
-![Fig 3. MTSP Task Planning Results for a Scenario with 9 UAVs and 9 Tasks](./results/Image/Fig 3. MTSP Task Planning Results for a Scenario with 9 UAVs and 9 Tasks.png)
+![Fig 3. MTSP Task Planning Results for a Scenario with 9 UAVs and 9 Tasks](./results/Image/Fig_3_MTSP_Task_Planning_Results_for_a_Scenario_with_9_UAVs_and_9_Tasks.png)
 
 *Fig 3. MTSP Task Planning Results for a Scenario with 9 UAVs and 9 Tasks*
 
@@ -60,7 +60,7 @@ On the constructed Manhattan 3D occupancy grid map, five global path planning al
 
 Based on the **Minimum Snap** method, the system smooths the segmented trajectories generated by BiRRT. A seventh-order polynomial model and quadratic programming optimization are used to produce time–space continuous trajectories. The optimization simultaneously constrains velocity and acceleration, ensuring dynamic feasibility while maintaining path smoothness under real urban conditions.
 
-![Fig 4. Comparison of Original BiRRT and Optimized Trajectories Across X, Y, and Z Axes](./results/Image/Fig 4. Comparison of Original BiRRT and Optimized Trajectories Across X, Y, and Z Axes.png)
+![Fig 4. Comparison of Original BiRRT and Optimized Trajectories Across X, Y, and Z Axes](./results/Image/Fig_4_Comparison_of_Original_BiRRT_and_Optimized_Trajectories_Across_X_Y_and_Z_Axes.png)
 
 *Fig 4. Comparison of Original BiRRT and Optimized Trajectories Across X, Y, and Z Axes*
 
@@ -88,7 +88,7 @@ The main file `manhattan_3d_planning.m` adopts a highly parameterized architectu
 
 The system, centered on the main program `manhattan_3d_planning.m`, integrates modules for urban environment construction, task generation and allocation, global path planning, trajectory smoothing, and local dynamic obstacle avoidance simulation, forming a complete workflow from environmental setup to execution.
 
-![Fig 5. Functional Block Diagram of the System](./results/Image/Fig 5. Functional Block Diagram of the System.png)
+![Fig 5. Functional Block Diagram of the System](./results/Image/Fig_5_Functional_Block_Diagram_of_the_System.png)
 
 *Fig 5. Functional Block Diagram of the System*
 
@@ -133,7 +133,7 @@ The system employs an adaptive layout strategy to automatically determine optima
 
 **(1) Planning Workflow:** After task allocation, the system performs path planning sequentially for each UAV. Each path segment connects a pair of adjacent task points (sp→gp); if their altitude difference exceeds 150 m, an intermediate waypoint is inserted for sub-segmented planning. The program calls `birrt_plan_segment` (defined in `birrt_plan_segment.m`) to generate a feasible polyline path for each segment and stores it as a BiRRT sub-path. All sub-paths are concatenated to form the UAV's full reference path `globalRefPaths{u}`.
 
-![Fig 6. Global BiRRT Planned Piecewise Linear Path for 15 Tasks and 16 UAVs](./results/Image/Fig 6. Global BiRRT Planned Piecewise Linear Path for 15 Tasks and 16 UAVs.png)
+![Fig 6. Global BiRRT Planned Piecewise Linear Path for 15 Tasks and 16 UAVs](./results/Image/Fig_6_Global_BiRRT_Planned_Piecewise_Linear_Path_for_15_Tasks_and_16_UAVs.png)
 
 *Fig 6. Global BiRRT Planned Piecewise Linear Path for 15 Tasks and 16 UAVs*
 
@@ -161,7 +161,7 @@ The system employs an adaptive layout strategy to automatically determine optima
 
 **(4) Post-Processing and Merging:** After optimization, `removeConsecutiveDuplicates` (in `manhattan_3d_planning.m`) removes consecutive duplicates and merges all smoothed segments into `optimizedRefPaths{u}`, serving as the final reference trajectory.
 
-![Fig 7. A Minimum-Snap Smoothed Global Reference Path for 15 Tasks and 16 UAVs](./results/Image/Fig 7. A Minimum-Snap Smoothed Global Reference Path for 15 Tasks and 16 UAVs.png)
+![Fig 7. A Minimum-Snap Smoothed Global Reference Path for 15 Tasks and 16 UAVs](./results/Image/Fig_7_A_Minimum_Snap_Smoothed_Global_Reference_Path_for_15_Tasks_and_16_UAVs.png)
 
 *Fig 7. A Minimum-Snap Smoothed Global Reference Path for 15 Tasks and 16 UAVs*
 
@@ -199,19 +199,19 @@ This section corresponds to the simulation workflow shown in the overall framewo
 
 **Comparison between Reference and Actual Trajectories (Length and Number of Waypoints):**
 
-![Fig 8. Reference vs Actual Trajectories in the case of 15 task points and 16 UAVs — Length Statistics](./results/Image/Fig 8. Reference vs Actual Trajectories in the case of 15 task points and 16 UAVs — Length Statistics.png)
+![Fig 8. Reference vs Actual Trajectories in the case of 15 task points and 16 UAVs — Length Statistics](./results/Image/Fig_8_Reference_vs_Actual_Trajectories_in_the_Case_of_15_Task_Points_and_16_UAVs_Length_Statistics.png)
 
 *Fig 8. Reference vs Actual Trajectories — Length Statistics*
 
 **Visualization of Reference and Actual Trajectories:** (The reference trajectories are shown as dashed lines, and the actual UAV trajectories as solid lines.)
 
-![Fig 9. Reference and Actual Trajectories for 15 Tasks and 16 UAVs](./results/Image/Fig 9. Reference and Actual Trajectories for 15 Tasks and 16 UAVs.png)
+![Fig 9. Reference and Actual Trajectories for 15 Tasks and 16 UAVs](./results/Image/Fig_9_Reference_and_Actual_Trajectories_for_15_Tasks_and_16_UAVs.png)
 
 *Fig 9. Reference and Actual Trajectories for 15 Tasks and 16 UAVs*
 
 **Display of Reference and Actual Trajectories in the Manhattan OccupancyMap3D Scene:**
 
-![Fig 10. Reference and Actual UAV Trajectories in OccupancyMap3D (15 Tasks, 16 UAVs)](./results/Image/Fig 10. Reference and Actual UAV Trajectories in OccupancyMap3D (15 Tasks, 16 UAVs).png)
+![Fig 10. Reference and Actual UAV Trajectories in OccupancyMap3D (15 Tasks, 16 UAVs)](./results/Image/Fig_10_Reference_and_Actual_UAV_Trajectories_in_OccupancyMap3D_15_Tasks_16_UAVs.png)
 
 *Fig 10. Reference and Actual UAV Trajectories in OccupancyMap3D (15 Tasks, 16 UAVs)*
 
@@ -219,19 +219,29 @@ This section corresponds to the simulation workflow shown in the overall framewo
 
 - Animation 1: All UAVs executing 15 tasks with 16 UAVs in total.
 
-  <video src="./results/Video/video 1  All UAVs executing 15 tasks with 16 UAVs in total..mp4"></video>
+  [🎥 Video 1: All UAVs executing 15 tasks with 16 UAVs in total](results/Video/Video_1_All_UAVs_Executing_15_Tasks_with_16_UAVs_in_Total.mp4)
+
+  [![Video 1: All UAVs executing 15 tasks with 16 UAVs in total](results/Video/Video_1.png)](results/Video/Video_1_All_UAVs_Executing_15_Tasks_with_16_UAVs_in_Total.mp4)
 
 - Animation 2: Single UAV (UAV 5) performing its assigned task in the case of 15 task points and 16 UAVs.
 
-  <video src="./results/Video/video 2 Single UAV (UAV 5) performing its assigned task in the case of 15 task points and 16 UAVs..mp4"></video>
+  [🎥 Video 2: Single UAV (UAV 5) performing its assigned task](results/Video/Video_2_Single_UAV_5_Performing_Its_Assigned_Task_in_the_Case_of_15_Task_Points_and_16_UAVs.mp4)
+
+  [![Video 2: Single UAV (UAV 5) performing its assigned task in the case of 15 task points and 16 UAVs](results/Video/Video_2.png)](results/Video/Video_2_Single_UAV_5_Performing_Its_Assigned_Task_in_the_Case_of_15_Task_Points_and_16_UAVs.mp4)
 
 - Animation 3: Single UAV (UAV 9) performing its assigned task in the case of 15 task points and 16 UAVs.
 
-  <video src="./results/Video/video 3 Single UAV (UAV 9) performing its assigned task in the case of 15 task points and 16 UAVs..mp4"></video>
+  [🎥 Video 3: Single UAV (UAV 9) performing its assigned task](results/Video/Video_3_Single_UAV_9_Performing_Its_Assigned_Task_in_the_Case_of_15_Task_Points_and_16_UAVs.mp4)
+
+  [![Video 3: Single UAV (UAV 9) performing its assigned task in the case of 15 task points and 16 UAVs](results/Video/Video_3.png)](results/Video/Video_3_Single_UAV_9_Performing_Its_Assigned_Task_in_the_Case_of_15_Task_Points_and_16_UAVs.mp4)
 
 - Animation 4: Single UAV (UAV 11) performing its assigned task in the case of 15 task points and 16 UAVs.
 
-  <video src="./results/Video/video 4 Single UAV (UAV 11) performing its assigned task in the case of 15 task points and 16 UAVs..mp4"></video>
+  [🎥 Video 4: Single UAV (UAV 11) performing its assigned task](results/Video/Video_4_Single_UAV_11_Performing_Its_Assigned_Task_in_the_Case_of_15_Task_Points_and_16_UAVs.mp4)
+  
+  [![Video 4: Single UAV (UAV 11) performing its assigned task in the case of 15 task points and 16 UAVs](results/Video/Video_4.png)](results/Video/Video_4_Single_UAV_11_Performing_Its_Assigned_Task_in_the_Case_of_15_Task_Points_and_16_UAVs.mp4)
+  
+  
 
 #### 4.1.2 Case 2: 9 Task Points, 9 Charging Stations, 9 UAVs, Simulation Time = 100 s
 
@@ -261,19 +271,19 @@ UAV8:
 UAV9: No reference path
 ```
 
-![Fig 11. Reference vs Actual Trajectories in the case of 9 task points and 9 UAVs — Length Statistics](./results/Image/Fig 11. Reference vs Actual Trajectories in the case of 9 task points and 9 UAVs — Length Statistics.png)
+![Fig 11. Reference vs Actual Trajectories in the case of 9 task points and 9 UAVs — Length Statistics](./results/Image/Fig_11_Reference_vs_Actual_Trajectories_in_the_Case_of_9_Task_Points_and_9_UAVs_Length_Statistics.png)
 
 *Fig 11. Reference vs Actual Trajectories — Length Statistics*
 
 **Visualization of Reference and Actual Trajectories:** (The reference trajectories are shown as dashed lines, and the actual UAV trajectories as solid lines.)
 
-![Fig 12. Reference and Actual Trajectories for 9 Tasks and 9 UAVs](./results/Image/Fig 12. Reference and Actual Trajectories for 9 Tasks and 9 UAVs.png)
+![Fig 12. Reference and Actual Trajectories for 9 Tasks and 9 UAVs](./results/Image/Fig_12_Reference_and_Actual_Trajectories_for_9_Tasks_and_9_UAVs.png)
 
 *Fig 12. Reference and Actual Trajectories for 9 Tasks and 9 UAVs*
 
 **Display of Reference and Actual Trajectories in the Manhattan OccupancyMap3D Scene:**
 
-![Fig 13. Reference and Actual UAV Trajectories in OccupancyMap3D (9 Tasks, 9 UAVs)](./results/Image/Fig 13. Reference and Actual UAV Trajectories in OccupancyMap3D (9 Tasks, 9 UAVs).png)
+![Fig 13. Reference and Actual UAV Trajectories in OccupancyMap3D (9 Tasks, 9 UAVs)](./results/Image/Fig_13_Reference_and_Actual_UAV_Trajectories_in_OccupancyMap3D_9_Tasks_9_UAVs.png)
 
 *Fig 13. Reference and Actual UAV Trajectories in OccupancyMap3D (9 Tasks, 9 UAVs)*
 
@@ -290,43 +300,43 @@ This part corresponds to Section 3.5 Local Dynamic Obstacle Avoidance. In the la
 
 **(1) Head-on Encounter (Trajectory Intersection Angle = 0°)**
 
-![Figure 14. Avoidance after Collision Detection — 3D Trajectory View (0° Intersection)](./results/Image/Figure 14. Avoidance after Collision Detection — 3D Trajectory View (0° Intersection).png)
+![Figure 14. Avoidance after Collision Detection — 3D Trajectory View (0° Intersection)](./results/Image/Fig_14_Avoidance_after_Collision_Detection_3D_Trajectory_View_0_Degree_Intersection.png)
 
 *Figure 14. Avoidance after Collision Detection — 3D Trajectory View (0° Intersection)*
 
-![Figure 15. Avoidance after Collision Detection — XY-Plane View (0° Intersection)](./results/Image/Figure 15. Avoidance after Collision Detection — XY-Plane View (0° Intersection).png)
+![Figure 15. Avoidance after Collision Detection — XY-Plane View (0° Intersection)](./results/Image/Fig_15_Avoidance_after_Collision_Detection_XY_Plane_View_0_Degree_Intersection.png)
 
 *Figure 15. Avoidance after Collision Detection — XY-Plane View (0° Intersection)*
 
-![Figure 16. Distance Between Two UAVs vs. Time (0° Intersection)](./results/Image/Figure 16. Distance Between Two UAVs vs. Time (0° Intersection).png)
+![Figure 16. Distance Between Two UAVs vs. Time (0° Intersection)](./results/Image/Fig_16_Distance_Between_Two_UAVs_vs_Time_0_Degree_Intersection.png)
 
 *Figure 16. Distance Between Two UAVs vs. Time (0° Intersection)*
 
 **(2) Oblique Crossing (Trajectory Intersection Angle = 30°)**
 
-![Figure 17. Avoidance after Collision Detection — 3D Trajectory View (30° Intersection)](./results/Image/Figure 17. Avoidance after Collision Detection — 3D Trajectory View (30° Intersection).png)
+![Figure 17. Avoidance after Collision Detection — 3D Trajectory View (30° Intersection)](./results/Image/Fig_17_Avoidance_after_Collision_Detection_3D_Trajectory_View_30_Degree_Intersection.png)
 
 *Figure 17. Avoidance after Collision Detection — 3D Trajectory View (30° Intersection)*
 
-![Figure 18. Avoidance after Collision Detection — XY-Plane View (30° Intersection)](./results/Image/Figure 18. Avoidance after Collision Detection — XY-Plane View (30° Intersection).png)
+![Figure 18. Avoidance after Collision Detection — XY-Plane View (30° Intersection)](./results/Image/Fig_18_Avoidance_after_Collision_Detection_XY_Plane_View_30_Degree_Intersection.png)
 
 *Figure 18. Avoidance after Collision Detection — XY-Plane View (30° Intersection)*
 
-![Figure 19. Distance Between Two UAVs vs. Time (30° Intersection)](./results/Image/Figure 19. Distance Between Two UAVs vs. Time (30° Intersection).png)
+![Figure 19. Distance Between Two UAVs vs. Time (30° Intersection)](./results/Image/Fig_19_Distance_Between_Two_UAVs_vs_Time_30_Degree_Intersection.png)
 
 *Figure 19. Distance Between Two UAVs vs. Time (30° Intersection)*
 
 **(3) Perpendicular Crossing (Trajectory Intersection Angle = 90°)**
 
-![Figure 20. Avoidance after Collision Detection — 3D Trajectory View (90° Intersection)](./results/Image/Figure 20. Avoidance after Collision Detection — 3D Trajectory View (90° Intersection).png)
+![Figure 20. Avoidance after Collision Detection — 3D Trajectory View (90° Intersection)](./results/Image/Fig_20_Avoidance_after_Collision_Detection_3D_Trajectory_View_90_Degree_Intersection.png)
 
 *Figure 20. Avoidance after Collision Detection — 3D Trajectory View (90° Intersection)*
 
-![Figure 21. Avoidance after Collision Detection — XY-Plane View (90° Intersection)](./results/Image/Figure 21. Avoidance after Collision Detection — XY-Plane View (90° Intersection).png)
+![Figure 21. Avoidance after Collision Detection — XY-Plane View (90° Intersection)](./results/Image/Fig_21_Avoidance_after_Collision_Detection_XY_Plane_View_90_Degree_Intersection.png)
 
 *Figure 21. Avoidance after Collision Detection — XY-Plane View (90° Intersection)*
 
-![Figure 22. Distance Between Two UAVs vs. Time (90° Intersection)](./results/Image/Figure 22. Distance Between Two UAVs vs. Time (90° Intersection).png)
+![Figure 22. Distance Between Two UAVs vs. Time (90° Intersection)](./results/Image/Fig_22_Distance_Between_Two_UAVs_vs_Time_90_Degree_Intersection.png)
 
 *Figure 22. Distance Between Two UAVs vs. Time (90° Intersection)*
 
