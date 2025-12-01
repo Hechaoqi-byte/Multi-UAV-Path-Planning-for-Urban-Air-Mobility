@@ -1,5 +1,5 @@
 function [radardets, radarTracks, inforadar] = updateRadarTracker(radar, radarPHD, targets, egoUAV, mountingLoc, mountingAngles, time)
-    % 更新雷达跟踪器（基于官方示例）
+    % Update radar tracker 
     
     persistent lastRadarTime debugCount
     if isempty(lastRadarTime)
@@ -7,19 +7,19 @@ function [radardets, radarTracks, inforadar] = updateRadarTracker(radar, radarPH
         debugCount = 0;
     end
     
-    % 初始化输出
+    % Initialize outputs
     radardets = {};
     radarTracks = objectTrack.empty;
     inforadar = [];
     
-    % 确保时间严格递增
+    % Ensure strictly increasing time
     if time <= lastRadarTime
         time = lastRadarTime + 0.1;
     end
     
     debugCount = debugCount + 1;
     
-    % 获取自车位姿
+    % Get ego vehicle pose
     try
         egoPose = read(egoUAV);
         egoPos = egoPose(1:3);
@@ -34,12 +34,12 @@ function [radardets, radarTracks, inforadar] = updateRadarTracker(radar, radarPH
         
     catch ME
         if mod(debugCount, 100) == 1
-            fprintf('[雷达错误] 无法读取自车位姿: %s\n', ME.message);
+            fprintf('[Radar Error] Unable to read ego pose: %s\n', ME.message);
         end
         return;
     end
     
-    % 计算雷达在世界坐标系中的位置和方向
+    % Calculate radar position and orientation in world coordinates
     mountingQuat = quaternion(mountingAngles, 'eulerd', 'ZYX', 'frame');
     radarOrient = egoOrient * mountingQuat;
     
@@ -49,7 +49,7 @@ function [radardets, radarTracks, inforadar] = updateRadarTracker(radar, radarPH
     radarPos = egoPos + rotmat(egoOrient, 'frame') * mountingLoc(:);
     radarRotMat = rotmat(radarOrient, 'frame');
     
-    % 手动生成检测（与之前相同）
+    % Manual detection generation (same as before)
     validTargets = 0;
     radardets = {};
     
@@ -71,19 +71,19 @@ function [radardets, radarTracks, inforadar] = updateRadarTracker(radar, radarPH
                 targetVel = targetVel';
             end
             
-            % 计算相对位置
+            % Calculate relative position
             relPosWorld = targetPos - radarPos;
             distance = norm(relPosWorld);
             
-            % 范围检查
+            % Range check
             if distance < 5 || distance > 200
                 continue;
             end
             
-            % 转换到雷达坐标系
+            % Transform to radar coordinate system
             relPosRadar = radarRotMat' * relPosWorld;
             
-            % 视场检查
+            % Field of view check
             azimuth = atan2d(relPosRadar(2), relPosRadar(1));
             elevation = asind(relPosRadar(3) / distance);
             
@@ -91,7 +91,7 @@ function [radardets, radarTracks, inforadar] = updateRadarTracker(radar, radarPH
                 continue;
             end
             
-            % 添加噪声
+            % Add noise
             validTargets = validTargets + 1;
             rangeNoise = 2 * randn();
             azNoise = 0.5 * randn();
@@ -107,7 +107,7 @@ function [radardets, radarTracks, inforadar] = updateRadarTracker(radar, radarPH
             
             measurement = [noisyX; noisyY; noisyZ];
             
-            % 创建检测
+            % Create detection
             radardets{end+1} = objectDetection(time, measurement, ...
                 'MeasurementNoise', diag([2^2, 2^2, 2^2]), ...
                 'ObjectClassID', i, ...
@@ -118,17 +118,17 @@ function [radardets, radarTracks, inforadar] = updateRadarTracker(radar, radarPH
         end
     end
     
-    % 调试输出
+    % Debug output
     if mod(debugCount, 100) == 1
-        fprintf('[雷达调试] 时间=%.1f, 有效目标数=%d\n', time, validTargets);
+        fprintf('[Radar Debug] Time=%.1f, Valid targets=%d\n', time, validTargets);
         if validTargets > 0
-            fprintf('  ✓ 生成检测数=%d\n', numel(radardets));
+            fprintf('  ✓ Generated detections=%d\n', numel(radardets));
         else
-            fprintf('  [雷达警告] 没有有效目标\n');
+            fprintf('  [Radar Warning] No valid targets\n');
         end
     end
     
-    % 更新传感器配置
+    % Update sensor configuration
     try
         configs = radarPHD.SensorConfigurations;
         if ~isempty(configs)
@@ -151,7 +151,7 @@ function [radardets, radarTracks, inforadar] = updateRadarTracker(radar, radarPH
         configs = radarPHD.SensorConfigurations;
     end
     
-    % 执行跟踪更新
+    % Execute tracking update
     try
         if ~isempty(radardets) && (isLocked(radarPHD) || ~isempty(radardets))
             if ~iscell(configs)
@@ -162,7 +162,7 @@ function [radardets, radarTracks, inforadar] = updateRadarTracker(radar, radarPH
             lastRadarTime = time;
             
             if mod(debugCount, 100) == 1 && ~isempty(radarTracks)
-                fprintf('  ✓ 雷达航迹数=%d\n', numel(radarTracks));
+                fprintf('  ✓ Radar tracks=%d\n', numel(radarTracks));
             end
             
         elseif isLocked(radarPHD)
@@ -173,7 +173,7 @@ function [radardets, radarTracks, inforadar] = updateRadarTracker(radar, radarPH
         
     catch ME
         if mod(debugCount, 100) == 1
-            fprintf('  [跟踪错误] %s\n', ME.message);
+            fprintf('  [Tracking Error] %s\n', ME.message);
         end
         radarTracks = objectTrack.empty;
     end
