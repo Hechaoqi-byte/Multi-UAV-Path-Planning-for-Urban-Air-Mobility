@@ -255,7 +255,7 @@ for step = 1:CONFIG.num_steps
             % Current state
             uavState = [currentPos(u,:), currentVel(u,:)];
             
-            %% ===== MPC Candidate Trajectory Generation (使用原始函数) =====
+            %% ===== MPC Candidate Trajectory Generation =====
             try
                 candidateTrajs = generateCandidateTrajectories(...
                     planners{u}, uavState, refPaths{u}, CONFIG.speed_limit);
