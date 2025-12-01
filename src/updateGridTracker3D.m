@@ -1,18 +1,55 @@
 function [gridTracks, gridMap] = updateGridTracker3D(lidar, gridTracker, egoUAV, time)
-    % 更新3D栅格跟踪器（使用GNN跟踪器）
+% updateGridTracker3D Update 3D grid tracker using GNN tracker
+%
+% Description:
+%   Updates a 3D grid-based tracker using Global Nearest Neighbor (GNN) algorithm.
+%   Processes LiDAR point cloud data to generate detections, performs clustering,
+%   and updates the tracker state. Handles time synchronization and provides
+%   robust error handling for real-time tracking applications.
+%
+% Input Parameters:
+%   lidar       - LiDAR sensor object for point cloud data acquisition
+%   gridTracker - GNN tracker object for multi-target tracking
+%   egoUAV      - Ego UAV platform object for pose information
+%   time        - Current simulation time (must be strictly increasing)
+%
+% Output Parameters:
+%   gridTracks  - Array of updated objectTrack objects containing:
+%                 .TrackID     - Unique track identifier
+%                 .State       - State vector [x,vx,y,vy,z,vz]
+%                 .StateCovariance - State uncertainty covariance
+%                 .ObjectClassID - Object classification
+%   gridMap     - Empty output (reserved for future grid map functionality)
+%
+% Algorithm:
+%   1. Time synchronization and validation (ensures strictly increasing time)
+%   2. LiDAR point cloud acquisition and preprocessing
+%   3. Point cloud clustering using Euclidean distance clustering
+%   4. Detection generation from cluster centers
+%   5. Tracker update with generated detections
+%   6. Robust error handling and fallback mechanisms
+%
+% Features:
+%   - Strict time increment enforcement for tracker stability
+%   - Euclidean distance clustering for detection generation
+%   - Comprehensive error handling and fallback strategies
+%   - Periodic status reporting for monitoring
+%   - Support for both initialized and uninitialized tracker states
+
+    % Update 3D grid tracker (using GNN tracker)
     persistent lastGridTime
     if isempty(lastGridTime)
         lastGridTime = 0;
     end
 
-    % 确保时间严格递增
+    % Ensure time strictly increases
     if time <= lastGridTime
         time = lastGridTime + 0.1;
     end
 
-    % 检查时间递增
+    % Check time increment
     if time <= lastGridTime
-        fprintf('[警告] 栅格跟踪器时间未递增: %.6f -> %.6f\n', lastGridTime, time);
+        fprintf('[Warning] Grid tracker time not increasing: %.6f -> %.6f\n', lastGridTime, time);
         if isLocked(gridTracker)
             gridTracks = predictTracksToTime(gridTracker, 'confirmed', time);
         else
@@ -22,17 +59,17 @@ function [gridTracks, gridMap] = updateGridTracker3D(lidar, gridTracker, egoUAV,
         return;
     end
 
-    % 读取点云数据
+    % Read point cloud data
     [~, ~, ptCloud] = read(lidar);
     
-    % 获取ego位姿
+    % Get ego pose
     egoPose = read(egoUAV);
     
-    % 从点云生成检测
+    % Generate detections from point cloud
     detections = {};
     if ~isempty(ptCloud) && ptCloud.Count > 10
         try
-            % 简单聚类检测
+            % Simple clustering detection
             [labels, numClusters] = pcsegdist(ptCloud, 5);
             
             for i = 1:numClusters
@@ -49,27 +86,27 @@ function [gridTracks, gridMap] = updateGridTracker3D(lidar, gridTracker, egoUAV,
                 end
             end
         catch ME
-            fprintf('[警告] 点云聚类失败: %s\n', ME.message);
+            fprintf('[Warning] Point cloud clustering failed: %s\n', ME.message);
         end
     end
 
-    % 执行跟踪更新
+    % Execute tracking update
     try
         if isLocked(gridTracker) || ~isempty(detections)
             gridTracks = gridTracker(detections, time);
             lastGridTime = time;
             
             if mod(round(time*10), 50) == 0
-                fprintf('[信息] 3D栅格(GNN): 航迹数=%d\n', numel(gridTracks));
+                fprintf('[Info] 3D Grid (GNN): Track count=%d\n', numel(gridTracks));
             end
         else
             gridTracks = objectTrack.empty;
         end
         
-        gridMap = [];  % GNN不输出地图
+        gridMap = [];  % GNN does not output map
         
     catch ME
-        fprintf('[错误] 3D栅格跟踪器更新失败: %s\n', ME.message);
+        fprintf('[Error] 3D grid tracker update failed: %s\n', ME.message);
         if isLocked(gridTracker)
             gridTracks = predictTracksToTime(gridTracker, 'confirmed', time);
         else
