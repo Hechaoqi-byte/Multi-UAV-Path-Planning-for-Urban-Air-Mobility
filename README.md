@@ -19,7 +19,7 @@ See **UAM_Document**:
 
 # How to run section
 
-> **Important:**  
+> **Note:**  
 > Please run the following scripts **in sequence**, as the outputs of each step are required by the next.
 
 1. **First**, add the `src` directory to the MATLAB path.
@@ -57,6 +57,13 @@ See **UAM_Document**:
 See results and demonstration videos in the **results** folder, or refer to **Section 4: Results and Demonstrations** of the **UAM_Document**.
 
 > **Note:** All videos in the **results** folder must be downloaded locally to view.
+
+## Version Updates
+
+1. The functions `manhattan_3d_planning` and `uav_avoidance_with_helper2` have been updated to support collision avoidance among multiple UAVs.
+2. A new live script, `Scenario_Configurator`, has been added to configure the entire simulation.
+
+
 
 ---
 

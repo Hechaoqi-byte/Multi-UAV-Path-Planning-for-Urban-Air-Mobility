@@ -1,72 +1,133 @@
+%% ============================================================
+%% REPLACE lines 1-70 of manhattan_3d_planning.m with this code
+%% ============================================================
+
 clear; close all; clc;
 
 fprintf('=== Manhattan Multi-UAV System (Task Allocation + BiRRT + Dynamic Obstacle Avoidance) ===\n\n');
 
-rng(2021);
 %% ============================================================
-%% 0. System Configuration Area (Modify parameters here)
+%% 0. System Configuration Area
+%% ============================================================
+%% Two ways to configure:
+%%   Method 1: Run Scenario_Configurator.mlx → generates mission_config.mat
+%%   Method 2: Edit parameters directly below
 %% ============================================================
 
 fprintf('====================================================\n');
 fprintf('System Configuration\n');
 fprintf('====================================================\n\n');
 
-% ===== Core Configuration Parameters =====
-CONFIG = struct();
+%% --- Try to load configuration from file ---
+if exist('mission_config.mat', 'file')
+    fprintf(' Loading configuration from mission_config.mat...\n');
+    loaded = load('mission_config.mat');
+    CONFIG = loaded.CONFIG;
+    
+    % Set random seed for reproducibility
+    if isfield(CONFIG, 'rng_seed')
+        rng(CONFIG.rng_seed);
+        fprintf('  ✓ RNG seed: %d\n', CONFIG.rng_seed);
+    else
+        rng(2021);
+    end
+    
+    fprintf('  ✓ Configuration loaded successfully!\n');
+    fprintf('    UAVs: %d | Tasks: %d | Chargers: %d\n', ...
+        CONFIG.numUAVs, CONFIG.numTasks, CONFIG.numChargers);
+    fprintf('    Task mode: %s\n', CONFIG.task_mode);
+    fprintf('    Charger mode: %s\n', CONFIG.charger_mode);
+    
+    % Check for video export settings
+    if isfield(CONFIG, 'export_video') && CONFIG.export_video
+        fprintf('     Video export: ENABLED (%s)\n', CONFIG.video_filename);
+    end
+    
+    % Memory configuration
+    MEMORY_CONFIG = struct();
+    MEMORY_CONFIG.maxHistorySteps = max(1000, CONFIG.sim_time * 2);
+    
+    config_loaded_from_file = true;
+    fprintf('\n');
+    
+else
+    %% --- No config file, use default parameters ---
+    fprintf(' No mission_config.mat found, using default CONFIG...\n');
+    fprintf('   (Run Scenario_Configurator.mlx to create custom configuration)\n\n');
+    
+    rng(2021);
+    config_loaded_from_file = false;
+    
+    % ===== Core Configuration Parameters =====
+    CONFIG = struct();
+    
+    % UAV and Charging Station Configuration
+    CONFIG.numUAVs = 9;
+    CONFIG.numChargers = 9;
+    CONFIG.charger_mode = 'auto';        % 'auto', 'corners', 'grid', 'circle'
+    CONFIG.charger_height = 180;
+    
+    % Task Point Configuration
+    CONFIG.numTasks = 9;
+    CONFIG.task_mode = 'random';         % 'random', 'clustered', 'forced-conflict'
+    CONFIG.task_z_min = 160;
+    CONFIG.task_z_max = 200;
+    
+    % MTSP Optimization Configuration
+    CONFIG.mtsp_q1 = 0.05;
+    CONFIG.mtsp_q2 = 0.55;
+    CONFIG.mtsp_q3 = 0.40;
+    CONFIG.distance_metric = 'manhattan_obstacles';
+    CONFIG.vertical_penalty = 1.3;
+    
+    % GA Parameters
+    CONFIG.ga_population = 60;
+    CONFIG.ga_generations = 100;
+    
+    % Simulation Parameters
+    CONFIG.sim_time = 1000;
+    CONFIG.speed_limit = 15;
+    CONFIG.acc_max = 50;
+    
+    % Minimum Snap Configuration
+    CONFIG.minimum_snap.enabled = true;
+    CONFIG.minimum_snap.corridor_enabled = false;
+    CONFIG.minimum_snap.corridor_width = 8.0;
+    CONFIG.minimum_snap.max_waypoints = 10;
+    CONFIG.minimum_snap.n_intermediate = 4;
+    
+    % Video Export (default: disabled)
+    CONFIG.export_video = false;
+    CONFIG.video_filename = 'manhattan_uav_demo.mp4';
+    CONFIG.video_framerate = 20;
+    
+    % Memory Configuration
+    MEMORY_CONFIG = struct();
+    MEMORY_CONFIG.maxHistorySteps = max(1000, CONFIG.sim_time * 2);
+end
 
-% UAV and Charging Station Configuration
-CONFIG.numUAVs = 9;
-CONFIG.numChargers = 9;
-CONFIG.charger_mode = 'auto';        % Charging station layout: 'auto', 'corners', 'grid', 'circle'
-CONFIG.charger_height = 180;         % Charging station height (meters)
-
-% Task Point Configuration
-CONFIG.numTasks = 9;                % <- Number of task points (recommended = numUAVs × 2~3)
-CONFIG.task_mode = 'random';         % Task point generation: 'random', 'custom'
-CONFIG.task_z_min = 160;             % Task point minimum height (meters)
-CONFIG.task_z_max = 200;             % Task point maximum height (meters)
-
-% MTSP Optimization Configuration
-CONFIG.mtsp_q1 = 0.05;               % Charging station weight (low -> encourage more UAVs)
-CONFIG.mtsp_q2 = 0.55;               % Distance weight (high -> energy saving)
-CONFIG.mtsp_q3 = 0.40;               % Time weight (high -> fast)
-CONFIG.distance_metric = 'manhattan_obstacles';  % Distance metric
-CONFIG.vertical_penalty = 1.3;       % Vertical flight penalty
-
-% GA Parameters
-CONFIG.ga_population = 60;           % GA population size
-CONFIG.ga_generations = 100;         % GA generations
-
-% Simulation Parameters
-CONFIG.sim_time = 1000;              % Simulation steps (total duration = sim_time * 0.1 s)
-CONFIG.speed_limit = 15;             % Speed limit (m/s)
-CONFIG.acc_max = 50;                 % Acceleration limit (m/s²)
-
-% ===== Minimum Snap Configuration =====
-CONFIG.minimum_snap.enabled = true;              % Enable Minimum Snap
-CONFIG.minimum_snap.corridor_enabled = false;    % Enable corridor constraints  
-CONFIG.minimum_snap.corridor_width = 8.0;        % Corridor width (meters)
-CONFIG.minimum_snap.max_waypoints = 10;          % Maximum key points
-CONFIG.minimum_snap.n_intermediate = 4;          % Minimum constraint points
-
-% ===== Memory Configuration Parameters =====
-MEMORY_CONFIG = struct();
-% Dynamically set history record size (based on simulation steps, with margin)
-MEMORY_CONFIG.maxHistorySteps = max(1000, CONFIG.sim_time * 2);
-
+%% --- Display Current Configuration ---
 fprintf('Configuration Overview:\n');
 fprintf('  Number of UAVs: %d\n', CONFIG.numUAVs);
 fprintf('  Number of Charging Stations: %d\n', CONFIG.numChargers); 
 fprintf('  Charging Station Layout: %s\n', CONFIG.charger_mode);
 fprintf('  Number of Task Points: %d\n', CONFIG.numTasks);
+fprintf('  Task Mode: %s\n', CONFIG.task_mode);
 fprintf('  Task Height: %.0f-%.0fm\n', CONFIG.task_z_min, CONFIG.task_z_max);
 fprintf('  Distance Metric: %s\n', CONFIG.distance_metric);
-fprintf('  Optimization Objective: Energy Saving(%.0f%%) + Speed(%.0f%%)\n', ...
+fprintf('  Optimization: Energy(%.0f%%) + Speed(%.0f%%)\n', ...
     CONFIG.mtsp_q2*100, CONFIG.mtsp_q3*100);
 fprintf('  Simulation Duration: %.1f seconds\n', CONFIG.sim_time * 0.1);
 fprintf('  Max History Records: %d steps\n', MEMORY_CONFIG.maxHistorySteps);
 
+if config_loaded_from_file
+    fprintf('\n   (Loaded from mission_config.mat)\n');
+else
+    fprintf('\n   (Using default values)\n');
+end
+
 fprintf('====================================================\n\n');
+
 
 %% ============================================================
 %% 1. Create Scene (Supporting Multiple UAVs)
@@ -431,6 +492,8 @@ fprintf('  ✓ Charging station setup complete: %d stations\n', size(charger_pos
 fprintf('  Layout: %s, Height: %.1fm\n\n', actual_mode, CONFIG.charger_height);
     
     
+
+
 %% ----------------------------------------------------------------
 %% 10.2 Generate Task Points (Based on CONFIG)
 %% ----------------------------------------------------------------
@@ -441,6 +504,7 @@ numTasks = CONFIG.numTasks;  % Use configuration from CONFIG
 switch CONFIG.task_mode
     case 'random'
         % Random generation (avoiding buildings)
+        fprintf('  Mode: RANDOM\n');
         tasks_3d   = zeros(numTasks, 3);
         generated  = 0;
         maxAttempts = numTasks * 100;
@@ -482,6 +546,141 @@ switch CONFIG.task_mode
             numTasks = generated;
         end
         
+    case 'clustered'
+        % Clustered generation: tasks are grouped in 4 cluster areas
+        fprintf('  Mode: CLUSTERED (4 cluster areas)\n');
+        
+        % Define 4 cluster centers
+        clusterCenters = [
+            (xMin + xMax)/2 - (xMax - xMin)/4, (yMin + yMax)/2 - (yMax - yMin)/4;  % Bottom-left
+            (xMin + xMax)/2 + (xMax - xMin)/4, (yMin + yMax)/2 - (yMax - yMin)/4;  % Bottom-right
+            (xMin + xMax)/2 + (xMax - xMin)/4, (yMin + yMax)/2 + (yMax - yMin)/4;  % Top-right
+            (xMin + xMax)/2 - (xMax - xMin)/4, (yMin + yMax)/2 + (yMax - yMin)/4;  % Top-left
+        ];
+        clusterRadius = min(xMax - xMin, yMax - yMin) / 6;  % Cluster spread radius
+        
+        fprintf('  Cluster Centers:\n');
+        for cc = 1:4
+            fprintf('    Cluster %d: (%.1f, %.1f)\n', cc, clusterCenters(cc,1), clusterCenters(cc,2));
+        end
+        fprintf('  Cluster Radius: %.1f m\n', clusterRadius);
+        
+        tasks_3d = zeros(numTasks, 3);
+        generated = 0;
+        maxAttempts = numTasks * 100;
+        attempts = 0;
+        
+        while generated < numTasks && attempts < maxAttempts
+            attempts = attempts + 1;
+            
+            % Randomly select a cluster
+            clusterIdx = mod(generated, 4) + 1;
+            
+            % Generate point within cluster
+            angle = rand() * 2 * pi;
+            radius = rand() * clusterRadius;
+            x = clusterCenters(clusterIdx, 1) + radius * cos(angle);
+            y = clusterCenters(clusterIdx, 2) + radius * sin(angle);
+            z = CONFIG.task_z_min + rand() * (CONFIG.task_z_max - CONFIG.task_z_min);
+            
+            % Ensure within bounds
+            x = max(xMin + 10, min(xMax - 10, x));
+            y = max(yMin + 10, min(yMax - 10, y));
+            
+            candidate = [x, y, z];
+            
+            try
+                occStatus = checkOccupancy(omap, candidate);
+                if occStatus < 0.5
+                    generated = generated + 1;
+                    tasks_3d(generated, :) = candidate;
+                    
+                    if mod(generated, 5) == 0
+                        fprintf('    Progress: %d/%d\n', generated, numTasks);
+                    end
+                end
+            catch
+                continue;
+            end
+        end
+        
+        if generated < numTasks
+            warning('Only generated %d/%d task points', generated, numTasks);
+            tasks_3d = tasks_3d(1:generated, :);
+            numTasks = generated;
+        end
+        
+    case 'forced-conflict'
+        % Forced-conflict: tasks arranged in a ring, UAVs cross at center
+        fprintf('  Mode: FORCED-CONFLICT (ring arrangement, all paths cross at center)\n');
+        
+        % Calculate center and radius
+        centerX = (xMin + xMax) / 2;
+        centerY = (yMin + yMax) / 2;
+        radius = min(xMax - xMin, yMax - yMin) / 2 - 50;  % Leave margin from edges
+        
+        fprintf('  Ring Center: (%.1f, %.1f)\n', centerX, centerY);
+        fprintf('  Ring Radius: %.1f m\n', radius);
+        
+        tasks_3d = zeros(numTasks, 3);
+        generated = 0;
+        maxAttempts = numTasks * 50;
+        attempts = 0;
+        
+        % Generate tasks evenly distributed on a ring
+        angles = linspace(0, 2*pi, numTasks + 1);
+        angles = angles(1:end-1);  % Remove last (same as first)
+        
+        for i = 1:numTasks
+            attempts = 0;
+            placed = false;
+            
+            while ~placed && attempts < 50
+                attempts = attempts + 1;
+                
+                % Base position on ring
+                baseX = centerX + radius * cos(angles(i));
+                baseY = centerY + radius * sin(angles(i));
+                
+                % Add small random offset
+                offsetX = (rand() - 0.5) * 20;
+                offsetY = (rand() - 0.5) * 20;
+                
+                x = baseX + offsetX;
+                y = baseY + offsetY;
+                z = CONFIG.task_z_min + rand() * (CONFIG.task_z_max - CONFIG.task_z_min);
+                
+                candidate = [x, y, z];
+                
+                try
+                    occStatus = checkOccupancy(omap, candidate);
+                    if occStatus < 0.5
+                        generated = generated + 1;
+                        tasks_3d(generated, :) = candidate;
+                        placed = true;
+                        fprintf('    Task %d: (%.1f, %.1f, %.1f) - angle %.0f°\n', ...
+                            i, x, y, z, rad2deg(angles(i)));
+                    end
+                catch
+                    continue;
+                end
+            end
+            
+            if ~placed
+                % Fallback: place at base position
+                z = CONFIG.task_z_min + rand() * (CONFIG.task_z_max - CONFIG.task_z_min);
+                tasks_3d(i, :) = [baseX, baseY, z];
+                generated = generated + 1;
+                fprintf('    Task %d: (%.1f, %.1f, %.1f) - FALLBACK\n', i, baseX, baseY, z);
+            end
+        end
+        
+        numTasks = generated;
+        tasks_3d = tasks_3d(1:numTasks, :);
+        
+        fprintf('  ✓ Forced-conflict pattern created\n');
+        fprintf('  All UAV paths will cross near center (%.1f, %.1f)\n', centerX, centerY);
+        
     case 'custom'
         error('Custom mode requires defining tasks_3d in code');
         
@@ -492,6 +691,8 @@ end
 fprintf('  ✓ Task point generation complete: %d points\n', numTasks);
 fprintf('  Actual Height: [%.1f, %.1f]m\n\n', ...
     min(tasks_3d(:,3)), max(tasks_3d(:,3)));
+
+
     
     
 %% ----------------------------------------------------------------
@@ -1360,7 +1561,7 @@ while advance(scene) && logCount < maxSteps
                 end
             end
             
-          % ============================================================
+ % ============================================================
 % 6. *** Arrival Detection: <20m marks arrival, decelerate to 0 along trajectory ***
 % ============================================================
 if currentSegIdx >= length(segmentTrajectories{uavIdx}) 
